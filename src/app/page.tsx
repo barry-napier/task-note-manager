@@ -1,12 +1,20 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { Input } from "@/components/ui/input";
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
-
+import { Input } from "@/components/ui/input";
 import { addTask } from "./actions";
 
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    redirect("/signin");
+  }
+
   const { data: tasks } = await supabase.from("tasks").select("*");
 
   return (
