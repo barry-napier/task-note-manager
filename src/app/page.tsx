@@ -19,7 +19,10 @@ export default async function Home() {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-4">Task Note Manager</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-4xl font-bold">Task Note Manager</h1>
+        <SignOutButton />
+      </div>
       <form action={addTask} className="flex gap-2 mb-4">
         <Input name="title" placeholder="New task" />
         <Button type="submit">Add Task</Button>
@@ -30,5 +33,20 @@ export default async function Home() {
         ))}
       </ul>
     </div>
+  );
+}
+
+function SignOutButton() {
+  const handleSignOut = async () => {
+    "use server";
+    const supabase = createServerActionClient({ cookies });
+    await supabase.auth.signOut();
+    redirect("/signin");
+  };
+
+  return (
+    <form action={handleSignOut}>
+      <Button type="submit">Sign Out</Button>
+    </form>
   );
 }
