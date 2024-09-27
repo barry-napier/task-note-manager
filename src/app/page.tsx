@@ -1,7 +1,8 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
 import { addTask } from "./actions";
 
 export default async function Home() {
